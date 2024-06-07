@@ -1,0 +1,91 @@
+<template>
+  <div>
+    <h1>Gallery</h1>
+    <!-- Form for creating a new gallery entry -->
+    <form @submit.prevent="createGallery">
+      <label for="newRocnik">Rocnik:</label>
+      <input type="text" id="newRocnik" v-model="newGallery.rocnik" required><br>
+      <label for="newImageLink">Image Link:</label>
+      <input type="text" id="newImageLink" v-model="newGallery.imageLink" required><br>
+      <button type="submit">Create Gallery Entry</button>
+    </form>
+
+    <ul>
+      <li v-for="gallery in galleries" :key="gallery.id">
+        <!-- Form for updating gallery entry information -->
+        <form @submit.prevent="updateGallery(gallery)">
+          <label for="galleryRocnik">Rocnik:</label>
+          <input type="text" id="galleryRocnik" v-model="gallery.rocnik" required><br>
+          <label for="galleryImageLink">Image Link:</label>
+          <input type="text" id="galleryImageLink" v-model="gallery.imageLink" required><br>
+
+          <img :src="gallery.imageLink" alt="Gallery Image" /><br>
+
+          <button type="submit">Update Gallery Entry</button>
+        </form>
+        <button @click="deleteGallery(gallery.id)">Delete</button>
+        <strong>ID:</strong> {{ gallery.id }}<br>
+        <!-- You can remove displaying ID if it's not necessary -->
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      galleries: [],
+      newGallery: {
+        rocnik: '',
+        imageLink: ''
+      }
+    };
+  },
+  mounted() {
+    this.fetchGalleries();
+  },
+  methods: {
+    async fetchGalleries() {
+      try {
+        const response = await axios.get('http://localhost/backend_projekt/public/api/galleries'); // Adjust URL if necessary
+        this.galleries = response.data;
+      } catch (error) {
+        console.error('Error fetching galleries:', error);
+      }
+    },
+    async createGallery() {
+      try {
+        const response = await axios.post('http://localhost/backend_projekt/public/api/galleries', this.newGallery); // Adjust URL if necessary
+        this.galleries.push(response.data.gallery);
+        this.clearNewGalleryFields();
+        window.location.reload();
+      } catch (error) {
+        console.error('Error creating gallery entry:', error);
+      }
+    },
+    async updateGallery(gallery) {
+      try {
+        await axios.put(`http://localhost/backend_projekt/public/api/galleries/${gallery.id}`, gallery); // Adjust URL if necessary
+        window.location.reload();
+      } catch (error) {
+        console.error('Error updating gallery entry:', error);
+      }
+    },
+    async deleteGallery(id) {
+      try {
+        await axios.delete(`http://localhost/backend_projekt/public/api/galleries/${id}`); // Adjust URL if necessary
+        this.galleries = this.galleries.filter(gallery => gallery.id !== id);
+      } catch (error) {
+        console.error('Error deleting gallery entry:', error);
+      }
+    },
+    clearNewGalleryFields() {
+      this.newGallery.rocnik = '';
+      this.newGallery.imageLink = '';
+    }
+  }
+};
+</script>
