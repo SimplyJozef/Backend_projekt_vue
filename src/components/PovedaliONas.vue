@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Povedali O Nas</h1>
-    <!-- Form for creating a new speaker -->
+
     <form @submit.prevent="createPovedaliONas">
       <label for="newName">Name:</label>
       <input type="text" id="newName" v-model="newPovedaliONas.name" required><br>
@@ -16,7 +16,7 @@
 
     <ul>
       <li v-for="povedaliONas in povedaliONasList" :key="povedaliONas.id">
-        <!-- Form for updating Povedali O Nas information -->
+
         <form @submit.prevent="updatePovedaliONas(povedaliONas)">
           <label for="povedaliONasName">Name:</label>
           <input type="text" id="povedaliONasName" v-model="povedaliONas.name" required><br>
@@ -33,7 +33,7 @@
         </form>
         <button @click="deletePovedaliONas(povedaliONas.id)">Delete</button>
         <strong>ID:</strong> {{ povedaliONas.id }}<br>
-        <!-- You can remove displaying ID if it's not necessary -->
+
       </li>
     </ul>
   </div>
@@ -60,7 +60,7 @@ export default {
   methods: {
     async fetchPovedaliONas() {
       try {
-        const response = await axios.get('http://localhost/backend_projekt/public/api/povedalionas'); // Adjusted URL to match your backend endpoint
+        const response = await axios.get('http://localhost/backend_projekt/public/api/povedalionas');
         this.povedaliONasList = response.data;
       } catch (error) {
         console.error('Error fetching Povedali O Nas:', error);
@@ -68,7 +68,7 @@ export default {
     },
     async createPovedaliONas() {
       try {
-        const response = await axios.post('http://localhost/backend_projekt/public/api/povedalionas', this.newPovedaliONas); // Adjusted URL to match your backend endpoint
+        const response = await axios.post('http://localhost/backend_projekt/public/api/povedalionas', this.newPovedaliONas);
         this.povedaliONasList.push(response.data.povedaliONas);
         this.newPovedaliONas.name = '';
         this.newPovedaliONas.quote = '';
@@ -82,7 +82,7 @@ export default {
     },
     async updatePovedaliONas(povedaliONas) {
       try {
-        await axios.put(`http://localhost/backend_projekt/public/api/povedalionas/${povedaliONas.id}`, povedaliONas); // Adjusted URL to match your backend endpoint
+        await axios.put(`http://localhost/backend_projekt/public/api/povedalionas/${povedaliONas.id}`, povedaliONas);
         window.location.reload();
       } catch (error) {
         console.error('Error updating Povedali O Nas:', error);
@@ -90,7 +90,7 @@ export default {
     },
     async deletePovedaliONas(id) {
       try {
-        await axios.delete(`http://localhost/backend_projekt/public/api/povedalionas/${id}`); // Adjusted URL to match your backend endpoint
+        await axios.delete(`http://localhost/backend_projekt/public/api/povedalionas/${id}`);
         this.povedaliONasList = this.povedaliONasList.filter(povedaliONas => povedaliONas.id !== id);
       } catch (error) {
         console.error('Error deleting Povedali O Nas:', error);

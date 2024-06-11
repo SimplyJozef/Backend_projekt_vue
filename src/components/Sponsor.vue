@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Sponsors</h1>
-    <!-- Form for creating a new sponsor -->
+
     <form @submit.prevent="createSponsor">
       <label for="newImageLink">Image Link:</label>
       <input type="text" id="newImageLink" v-model="newSponsor.imageLink" required><br>
@@ -12,7 +12,7 @@
 
     <ul>
       <li v-for="sponsor in sponsors" :key="sponsor.id">
-        <!-- Form for updating sponsor information -->
+
         <form @submit.prevent="updateSponsor(sponsor)">
           <label for="sponsorImageLink">Image Link:</label>
           <input type="text" id="sponsorImageLink" v-model="sponsor.imageLink" required><br>
@@ -25,7 +25,7 @@
         </form>
         <button @click="deleteSponsor(sponsor.id)">Delete</button>
         <strong>ID:</strong> {{ sponsor.id }}<br>
-        <!-- You can remove displaying ID if it's not necessary -->
+
       </li>
     </ul>
   </div>

@@ -18,6 +18,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add your view-specific styles here */
-</style>
+

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Stages</h1>
-    <!-- Form for creating a new stage -->
+
     <form @submit.prevent="createStage">
       <label for="newName">Name:</label>
       <input type="text" id="newName" v-model="newStage.name" required><br>
@@ -11,35 +10,33 @@
     </form>
 
     <ul>
-      <li v-for="stage in stages" :key="stage.id">
 
+        <li v-for="stage in stages" :key="stage.id" class="program">
 
-        <!-- Form for updating stage information -->
-        <form @submit.prevent="updateStage(stage)">
-          <label for="stageName">Name:</label>
-          <input type="text" id="stageName" v-model="stage.name" required><br>
-          <label for="stageDate">Date:</label>
-          <input type="date" id="stageDate" v-model="stage.date" required><br>
-          <button type="submit">Update Stage</button>
-        </form>
-        <button @click="deleteStage(stage.id)">Delete</button>
-        <strong>ID:</strong> {{ stage.id }}<br>
+            <form @submit.prevent="updateStage(stage)" class="stage">
 
-        <!-- Display StageInfo component for each stage -->
-        <StageInfo :stageId="stage.id" />
-        <!-- You can remove displaying ID if it's not necessary -->
-      </li>
+              <input type="text" id="stageName" v-model="stage.name" required><br>
+
+              <input type="date" id="stageDate" v-model="stage.date" required><br>
+              <button type="submit">Update Stage</button>
+            </form>
+
+          <button @click="deleteStage(stage.id)">Delete</button>
+          <strong>ID:</strong> {{ stage.id }}<br>
+          <StageInfo :stageId="stage.id" />
+        </li>
+
     </ul>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import StageInfo from './StageInfo.vue'; // Import StageInfo component
+import StageInfo from './StageInfo.vue';
 
 export default {
   components: {
-    StageInfo // Register StageInfo component
+    StageInfo
   },
   data() {
     return {
@@ -75,7 +72,7 @@ export default {
     async updateStage(stage) {
       try {
         await axios.put(`http://localhost/backend_projekt/public/api/stages/${stage.id}`, stage);
-        // Assuming successful update, no need to update local data, as it's already reactive.
+
       } catch (error) {
         console.error('Error updating stage:', error);
       }
@@ -91,3 +88,17 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+
+  .stage {
+    display: flex;
+
+  }
+
+  .program {
+    background: #004953;
+    list-style-type: none;
+
+  }
+</style>

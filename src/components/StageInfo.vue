@@ -1,11 +1,9 @@
 
 
 <template>
-  <div>
-    <h1>Stage Information</h1>
+  <div class="stage-info">
 
-    <!-- Form for creating new StageInfo -->
-    <form @submit.prevent="createStageInfo">
+    <form @submit.prevent="createStageInfo" class="create-forum">
       <input type="hidden" v-model="newStageInfo.stage_id" value="">
       <label for="casOd">Cas Od:</label>
       <input type="text" id="casOd" v-model="newStageInfo.cas_od" required><br>
@@ -26,9 +24,9 @@
 
     <!-- List of StageInfo -->
     <ul>
-      <li v-for="stageInfo in filteredStageInfo" :key="stageInfo.id">
+      <li v-for="stageInfo in filteredStageInfo" :key="stageInfo.id" >
         <!-- Form for updating StageInfo -->
-        <form @submit.prevent="updateStageInfo(stageInfo)">
+        <form @submit.prevent="updateStageInfo(stageInfo)" class="update-forum">
           <input type="hidden" v-model="newStageInfo.stage_id" >
           <label for="casOd">Cas Od:</label>
           <input type="text" id="casOd" v-model="stageInfo.cas_od" required><br>
@@ -67,7 +65,7 @@ export default {
     return {
       filteredStageInfo: [],
       newStageInfo: {
-        stage_id: this.stageId, // Initialize stage_id with stageId prop
+        stage_id: this.stageId,
         cas_od: '',
         cas_do: '',
         nazov: '',
@@ -81,12 +79,7 @@ export default {
   mounted() {
     this.fetchStageInfo();
   },
-  watch: {
-    // Watch for changes in stageId prop and update newStageInfo.stage_id accordingly
-    stageId(newVal) {
-      this.newStageInfo.stage_id = newVal;
-    }
-  },
+
   methods: {
     async fetchStageInfo() {
       try {
@@ -121,7 +114,7 @@ export default {
       }
     },
     clearNewStageInfoFields() {
-      this.newStageInfo.stage_id = this.stageId; // Reset stage_id to stageId prop value
+      this.newStageInfo.stage_id = this.stageId;
       this.newStageInfo.cas_od = '';
       this.newStageInfo.cas_do = '';
       this.newStageInfo.nazov = '';
@@ -133,3 +126,23 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .create-forum {
+    display: flex;
+  }
+
+  .update-forum {
+    display: flex;
+  }
+
+  .stage-info{
+    padding-bottom: 1em;
+  }
+
+  .update-forum input {
+    margin: 0;
+  }
+
+
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Speakers</h1>
-    <!-- Form for creating a new speaker -->
+
     <form @submit.prevent="createSpeaker">
       <label for="newName">Name:</label>
       <input type="text" id="newName" v-model="newSpeaker.name" required><br>
@@ -18,7 +18,7 @@
 
     <ul>
       <li v-for="speaker in speakers" :key="speaker.id">
-        <!-- Form for updating speaker information -->
+
         <form @submit.prevent="updateSpeaker(speaker)">
           <label for="speakerName">Name:</label>
           <input type="text" id="speakerName" v-model="speaker.name" required><br>
@@ -38,7 +38,7 @@
         </form>
         <button @click="deleteSpeaker(speaker.id)">Delete</button>
         <strong>ID:</strong> {{ speaker.id }}<br>
-        <!-- You can remove displaying ID if it's not necessary -->
+
       </li>
     </ul>
   </div>
@@ -66,7 +66,7 @@ export default {
   methods: {
     async fetchSpeakers() {
       try {
-        const response = await axios.get('http://localhost/backend_projekt/public/api/speakers'); // Changed URL to use relative path
+        const response = await axios.get('http://localhost/backend_projekt/public/api/speakers');
         this.speakers = response.data;
       } catch (error) {
         console.error('Error fetching speakers:', error);
@@ -74,7 +74,7 @@ export default {
     },
     async createSpeaker() {
       try {
-        const response = await axios.post('http://localhost/backend_projekt/public/api/speakers', this.newSpeaker); // Changed URL to use relative path
+        const response = await axios.post('http://localhost/backend_projekt/public/api/speakers', this.newSpeaker);
         this.speakers.push(response.data.speaker);
         this.newSpeaker.firma = ''
         this.newSpeaker.name = ''
@@ -89,7 +89,7 @@ export default {
     },
     async updateSpeaker(speaker) {
       try {
-        await axios.put(`http://localhost/backend_projekt/public/api/speakers/${speaker.id}`, speaker); // Changed URL to use relative path
+        await axios.put(`http://localhost/backend_projekt/public/api/speakers/${speaker.id}`, speaker);
         window.location.reload();
       } catch (error) {
         console.error('Error updating speaker:', error);
@@ -97,7 +97,7 @@ export default {
     },
     async deleteSpeaker(id) {
       try {
-        await axios.delete(`http://localhost/backend_projekt/public/api/speakers/${id}`); // Changed URL to use relative path
+        await axios.delete(`http://localhost/backend_projekt/public/api/speakers/${id}`);
         this.speakers = this.speakers.filter(speaker => speaker.id !== id);
       } catch (error) {
         console.error('Error deleting speaker:', error);

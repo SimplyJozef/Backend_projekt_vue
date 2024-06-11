@@ -4,12 +4,12 @@
         v-model="editorData"
         :editor="editor"
     ></ckeditor>
-    <div v-html="editorData"></div> <!-- Displaying editorData in a div -->
+    <div v-html="editorData"></div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
